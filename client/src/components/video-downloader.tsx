@@ -10,6 +10,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useWebSocket } from '@/hooks/use-websocket';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
+import { AdsBanner, useAdMob } from '@/components/ui/ads-banner';
+import { DonationButton } from '@/components/donation-button';
 
 interface QualityOption {
   value: string;
@@ -78,6 +80,7 @@ export default function VideoDownloader() {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { showInterstitialAd } = useAdMob();
 
   // WebSocket for real-time progress updates
   useWebSocket({
@@ -213,6 +216,9 @@ export default function VideoDownloader() {
   const handleDownload = () => {
     if (!videoInfo) return;
 
+    // Mostrar anúncio intersticial antes do download (opcional)
+    // showInterstitialAd();
+
     downloadMutation.mutate({
       url,
       quality,
@@ -234,22 +240,49 @@ export default function VideoDownloader() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-4">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center space-y-4 pt-8">
-          <div className="inline-flex items-center gap-2">
-            <Video className="w-8 h-8 text-primary" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              StreetTech Downloader
-            </h1>
+      {/* Banner Ad Top */}
+      <div className="max-w-4xl mx-auto">
+        <AdsBanner position="top" className="mb-4" />
+      </div>
+      
+      <div className="max-w-6xl mx-auto">
+        <div className="flex gap-6">
+          {/* Sidebar com anúncio (desktop) */}
+          <div className="hidden lg:flex flex-col gap-4 w-64">
+            <AdsBanner position="sidebar" />
+            <Card className="p-4">
+              <div className="text-center space-y-3">
+                <h3 className="font-semibold text-sm">Gostou do app?</h3>
+                <p className="text-xs text-muted-foreground">
+                  Apoie o desenvolvimento para manter o app gratuito!
+                </p>
+                <DonationButton />
+              </div>
+            </Card>
           </div>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Download YouTube videos in high quality, up to 4K. Paste the URL, choose quality and download instantly.
-          </p>
-        </div>
 
-        {/* Main Card */}
-        <Card className="border-0 bg-gradient-to-br from-card/90 to-card/70 shadow-2xl">
+          {/* Conteúdo principal */}
+          <div className="flex-1 space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-4 pt-8">
+              <div className="inline-flex items-center gap-2">
+                <Video className="w-8 h-8 text-primary" />
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  StreetTech Downloader
+                </h1>
+              </div>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Download YouTube videos in high quality, up to 4K. Paste the URL, choose quality and download instantly.
+              </p>
+              
+              {/* Botão de doação mobile */}
+              <div className="lg:hidden flex justify-center">
+                <DonationButton />
+              </div>
+            </div>
+
+            {/* Main Card */}
+            <Card className="border-0 bg-gradient-to-br from-card/90 to-card/70 shadow-2xl">
           <CardHeader>
             <CardTitle className="text-2xl flex items-center gap-2">
               <Download className="w-6 h-6 text-primary" />
@@ -548,6 +581,13 @@ export default function VideoDownloader() {
               Secure & private
             </div>
           </Card>
+        </div>
+          </div>
+        </div>
+        
+        {/* Banner Ad Bottom */}
+        <div className="max-w-4xl mx-auto mt-8">
+          <AdsBanner position="bottom" />
         </div>
       </div>
     </div>

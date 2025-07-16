@@ -18,6 +18,11 @@ Preferred communication style: Simple, everyday language.
 - ✅ WebSocket real-time updates working correctly
 - ✅ Video info fetching from YouTube working
 - ✅ Download history and file serving implemented
+- ✅ Added complete AdMob advertising structure with strategic placements
+- ✅ Implemented donation system with PIX, Ko-fi, and PayPal options
+- ✅ Created responsive layout with sidebar ads for desktop
+- ✅ Prepared Supabase integration for production database
+- ✅ Added comprehensive documentation for ads and donations setup
 
 ## System Architecture
 
@@ -25,10 +30,12 @@ The application follows a monorepo structure with clear separation between clien
 
 - **Frontend**: React SPA with TypeScript, using Vite as the build tool
 - **Backend**: Express.js server with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM for data persistence
+- **Database**: PostgreSQL with Drizzle ORM (Supabase ready)
 - **Real-time Communication**: WebSockets for download progress updates
 - **UI Framework**: shadcn/ui components with Tailwind CSS
 - **Video Processing**: yt-dlp for YouTube video downloading
+- **Monetization**: AdMob integration structure with strategic ad placements
+- **Donations**: Multi-platform donation system (PIX, Ko-fi, PayPal)
 
 ## Key Components
 
