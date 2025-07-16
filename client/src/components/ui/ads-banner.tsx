@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card } from '@/components/ui/card';
 
 interface AdsBannerProps {
   position: 'top' | 'bottom' | 'sidebar';
@@ -7,7 +6,6 @@ interface AdsBannerProps {
 }
 
 export function AdsBanner({ position, className = '' }: AdsBannerProps) {
-  // Placeholder para AdMob - será substituído por código real do AdMob
   const getAdSize = () => {
     switch (position) {
       case 'top':
@@ -20,26 +18,40 @@ export function AdsBanner({ position, className = '' }: AdsBannerProps) {
     }
   };
 
+  const getAdSlot = () => {
+    // IDs de slot específicos para cada posição (você deve criar no AdMob)
+    switch (position) {
+      case 'top':
+        return '1234567890'; // Criar slot para banner top
+      case 'bottom':
+        return '0987654321'; // Criar slot para banner bottom  
+      case 'sidebar':
+        return '1122334455'; // Criar slot para sidebar
+      default:
+        return '1234567890';
+    }
+  };
+
+  React.useEffect(() => {
+    try {
+      // @ts-ignore
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (err) {
+      console.log('AdSense error:', err);
+    }
+  }, []);
+
   return (
-    <Card className={`${getAdSize()} ${className} border-dashed border-muted/50 bg-muted/20 flex items-center justify-center`}>
-      <div className="text-center text-muted-foreground text-sm">
-        <div className="text-xs font-medium mb-1">Anúncio</div>
-        <div className="text-xs opacity-60">
-          {position === 'top' && 'Banner Top 728x90'}
-          {position === 'bottom' && 'Banner Bottom 728x90'}
-          {position === 'sidebar' && 'Medium Rectangle 300x250'}
-        </div>
-        {/* 
-        Aqui será integrado o código do AdMob:
-        
-        Para React/Web AdMob, usar:
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"></script>
-        
-        Ou para aplicativo mobile com Capacitor:
-        import { AdMob } from '@capacitor-community/admob';
-        */}
-      </div>
-    </Card>
+    <div className={`${getAdSize()} ${className}`}>
+      <ins 
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client="ca-pub-7984194482199524"
+        data-ad-slot={getAdSlot()}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
   );
 }
 

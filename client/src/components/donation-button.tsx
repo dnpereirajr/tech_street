@@ -14,8 +14,8 @@ export function DonationButton() {
       description: 'Doação rápida via PIX',
       icon: <Zap className="w-5 h-5" />,
       action: () => {
-        // Aqui você colocaria sua chave PIX
-        navigator.clipboard.writeText('sua-chave-pix@email.com');
+        // Substitua pela sua chave PIX real
+        navigator.clipboard.writeText('contato@streettech.com.br');
         toast({
           title: "Chave PIX copiada!",
           description: "Chave PIX copiada para área de transferência",
@@ -28,7 +28,7 @@ export function DonationButton() {
       description: 'Apoie com Ko-fi',
       icon: <Coffee className="w-5 h-5" />,
       action: () => {
-        window.open('https://ko-fi.com/seuusuario', '_blank');
+        window.open('https://ko-fi.com/streettech', '_blank');
       }
     },
     {
@@ -37,7 +37,7 @@ export function DonationButton() {
       description: 'Doação internacional',
       icon: <Heart className="w-5 h-5" />,
       action: () => {
-        window.open('https://paypal.me/seuusuario', '_blank');
+        window.open('https://paypal.me/streettech', '_blank');
       }
     }
   ];
