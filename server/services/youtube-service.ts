@@ -6,8 +6,8 @@ export class YouTubeService {
   private ytDlpPath: string;
 
   constructor() {
-    // Try to find yt-dlp in common locations
-    this.ytDlpPath = process.env.YT_DLP_PATH || "yt-dlp";
+    // Use the full path to yt-dlp from Nix store
+    this.ytDlpPath = process.env.YT_DLP_PATH || "/nix/store/mj7z8g8zfm3nd2ihymkk83czk9yz4xzd-python3.11-yt-dlp-2024.5.27/bin/yt-dlp";
   }
 
   async getVideoInfo(url: string): Promise<VideoInfo> {
@@ -21,6 +21,10 @@ export class YouTubeService {
       const ytDlp = spawn(this.ytDlpPath, [
         "--dump-json",
         "--no-download",
+        "--ignore-errors",
+        "--no-warnings",
+        "--extractor-retries", "3",
+        "--socket-timeout", "30",
         url
       ]);
 

@@ -35,6 +35,13 @@ export class MemStorage implements IStorage {
       ...insertVideo,
       id: Date.now(),
       createdAt: new Date(),
+      duration: insertVideo.duration || null,
+      description: insertVideo.description || null,
+      thumbnail: insertVideo.thumbnail || null,
+      channel: insertVideo.channel || null,
+      views: insertVideo.views || null,
+      uploadDate: insertVideo.uploadDate || null,
+      availableQualities: insertVideo.availableQualities ? insertVideo.availableQualities.map(q => String(q)) : null,
     };
     this.videos.set(video.videoId, video);
     return video;
@@ -64,6 +71,15 @@ export class MemStorage implements IStorage {
       id,
       createdAt: new Date(),
       completedAt: null,
+      progress: insertDownload.progress || 0,
+      format: insertDownload.format || "mp4",
+      status: insertDownload.status || "pending",
+      filePath: insertDownload.filePath || null,
+      fileSize: insertDownload.fileSize || null,
+      downloadSpeed: insertDownload.downloadSpeed || null,
+      eta: insertDownload.eta || null,
+      error: insertDownload.error || null,
+      thumbnail: insertDownload.thumbnail || null,
     };
     this.downloads.set(id, download);
     return download;

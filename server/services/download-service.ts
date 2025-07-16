@@ -9,7 +9,7 @@ export class DownloadService {
   private downloadDir: string;
 
   constructor() {
-    this.ytDlpPath = process.env.YT_DLP_PATH || "yt-dlp";
+    this.ytDlpPath = process.env.YT_DLP_PATH || "/nix/store/mj7z8g8zfm3nd2ihymkk83czk9yz4xzd-python3.11-yt-dlp-2024.5.27/bin/yt-dlp";
     this.downloadDir = process.env.DOWNLOAD_DIR || path.join(process.cwd(), "downloads");
     this.ensureDownloadDir();
   }
@@ -41,6 +41,10 @@ export class DownloadService {
         "--output",
         outputTemplate,
         "--newline",
+        "--ignore-errors",
+        "--no-warnings",
+        "--extractor-retries", "3",
+        "--socket-timeout", "30",
         url
       ];
 

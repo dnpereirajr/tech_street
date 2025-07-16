@@ -13,7 +13,7 @@ export const videos = pgTable("videos", {
   channel: text("channel"),
   views: text("views"),
   uploadDate: text("upload_date"),
-  availableQualities: jsonb("available_qualities").$type<string[]>().default([]),
+  availableQualities: jsonb("available_qualities").$type<string[]>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
